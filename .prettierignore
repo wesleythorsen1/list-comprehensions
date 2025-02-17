@@ -1,4 +1,5 @@
-benchmark/
+.clinic/
+*/**/*.0x/
 build/
 coverage/
 dist/

@@ -138,3 +138,9 @@ dist
 
 # nix build output
 /result
+
+# clinic profiling output
+/**/.clinic
+
+# 0x profiling output
+/**/*.0x
