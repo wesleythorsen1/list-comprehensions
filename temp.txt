@@ -1,0 +1,15 @@
+.
+├── benchmark
+│   ├── Dockerfile - builds a Docker image from this directory ONLY (as if ./benchmark/ was the project root)
+│   ├── package-lock.json
+│   ├── package.json
+│   └── run.js
+├── bin
+│   └── benchmark - this bash script calls `docker build` and `docker run` on ./benchmark/Dockerfile
+├── src
+│   └── ... Not used for benchmarks (this code is imported via NPM install in the ./benchmark/package.json)
+├── test
+│   └── ... Not used for benchmarks
+├── ...
+├── package.json
+└── tsconfig.json

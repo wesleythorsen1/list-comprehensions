@@ -1,6 +1,6 @@
 {
   "name": "@bussin/list-comprehensions",
-  "version": "0.1.1-2025-02-17.2",
+  "version": "0.1.1-2025-02-17.3",
   "description": "TypeScript list comprehensions with deferred execution.",
   "private": false,
   "repository": {
@@ -34,7 +34,8 @@
     "build:types": "tsc -p tsconfig.types.json && tsc-alias",
     "clean": "rimraf ./dist-* && rimraf *.tsbuildinfo",
     "lint": "eslint --fix */**/*.ts && prettier --write */**/*.ts",
-    "test": "jest"
+    "test": "jest",
+    "benchmark": "./bin/benchmark"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

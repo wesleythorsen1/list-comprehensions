@@ -11,7 +11,6 @@ export default tseslint.config(
   // @ts-ignore
   eslintConfigPrettier,
   {
-    ignores: ['node_modules/', 'dist/', 'coverage/'],
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
@@ -26,5 +25,8 @@ export default tseslint.config(
       '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
+  },
+  {
+    ignores: ['benchmark/', 'coverage/', 'dist/', 'node_modules/', 'result/'],
   },
 );

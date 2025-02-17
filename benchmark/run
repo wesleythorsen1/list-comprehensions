@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# exit when any command fails
+set -e
+
+# build
+docker build \
+  -f Dockerfile \
+  -t list-comprehensions-benchmarks:latest \
+  .
+
+echo "Running benchmarks"
+
+docker run --memory=100m --cpus=1 list-comprehensions-benchmarks:latest

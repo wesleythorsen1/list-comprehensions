@@ -2,12 +2,12 @@
   "extends": "./tsconfig.dist.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "importHelpers": true,
+    "importHelpers": false,
     "module": "commonjs",
-    "noEmitHelpers": false,
+    "noEmitHelpers": true,
     "outDir": "dist-cjs",
     "rootDir": "src",
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "target": "ES2018"
   }

@@ -133,4 +133,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/.vscode
+# vscode workspace settings
+/.vscode/settings.json
+
+# nix build output
+/result

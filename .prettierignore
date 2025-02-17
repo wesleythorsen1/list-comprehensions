@@ -1,5 +1,6 @@
-node_modules/
+benchmark/
 build/
-outputs/
-dist/
 coverage/
+dist/
+node_modules/
+outputs/
