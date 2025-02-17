@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "importHelpers": false,
     "module": "commonjs",
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "outDir": "dist-cjs",
     "rootDir": "src",
     "sourceMap": false,
