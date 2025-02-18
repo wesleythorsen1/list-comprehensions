@@ -6,9 +6,10 @@ WORKDIR /app
 COPY \
   package-lock.json \
   package.json \
-  *.js \
+  benchmark.js \
   ./
+COPY ./benchmarks ./benchmarks
 
 RUN npm ci 
 
-CMD ["node", "./run.js"]
+CMD ["node", "./benchmark.js"]

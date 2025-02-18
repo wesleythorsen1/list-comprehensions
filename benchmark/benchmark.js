@@ -1,53 +1,50 @@
-const Benchmark = require('benchmark');
-const _ = require('lodash');
-const underscore = require('underscore');
-require('@bussin/list-comprehensions/extensions/Array');
+const { writeFileSync } = require('fs');
+const { composite, filter, map } = require('./benchmarks');
+const package = require('./package.json');
 
-const data = Array.from({ length: 10000 }, (j, i) => i);
+const blcVersion = package.dependencies['@bussin/list-comprehensions'].replace(/^[\^\~]/g, '');
 
-// Create benchmark suite
-const suite = new Benchmark.Suite();
+(async () => {
+  const output = [
+    {
+      suite: 'suite',
+      name: 'name',
+      ops_sec: 'ops/sec',
+      variance: 'variance',
+      samples: 'samples',
+    },
+  ];
 
-suite
-  .add('Native Array filter', function () {
-    data
-      .filter(x => x % 2 === 0)
-      .map(x => x * x)
-      .map((x, i) => x - i * i)
-      .filter(x => x % 2 === 0);
-  })
-  // .add('Enumerable where', function () {
-  //   Enumerable.from(data)
-  //     .where(x => x % 2 === 0)
-  //     .toArray();
-  // })
-  .add('Enumerable where', function () {
-    data
-      .where(x => x % 2 === 0)
-      .select(x => x * x)
-      .select((x, i) => x - i * i)
-      .where(x => x % 2 === 0)
-      .toArray();
-  })
-  .add('Lodash filter', function () {
-    _.filter(data, x => x % 2 === 0)
-      .map(x => x * x)
-      .map((x, i) => x - i * i)
-      .filter(x => x % 2 === 0);
-  })
-  .add('Underscore filter', function () {
-    underscore
-      .filter(data, x => x % 2 === 0)
-      .map(x => x * x)
-      .map((x, i) => x - i * i)
-      .filter(x => x % 2 === 0);
-  })
-  // add listeners
-  .on('cycle', function (event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function () {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-  })
-  // run async
-  .run({ async: true });
+  for (const suite of [composite, filter, map]) {
+    console.log(`Running ${suite.name}`);
+
+    await new Promise(resolve => {
+      suite
+        .on('cycle', function (event) {
+          console.log(String(event.target));
+        })
+        .on('complete', function () {
+          output.push(
+            ...this.map(r => ({
+              suite: suite.name,
+              name: r.name,
+              ops_sec: r.hz,
+              variance: r.stats.rme,
+              samples: r.stats.sample.length,
+            })),
+          );
+
+          resolve();
+        })
+        .run({ async: true });
+    });
+  }
+
+  const fileOutput = output
+    .map(o => `${o.suite},${o.name},${o.ops_sec},${o.variance},${o.samples}`)
+    .join('\n');
+
+  writeFileSync(`./benchmark/results/${Date.now()}.${blcVersion}.csv`, fileOutput);
+
+  console.log('done');
+})();
