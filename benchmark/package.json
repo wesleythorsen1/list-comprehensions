@@ -11,7 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@bussin/list-comprehensions": "0.1.1-2025-02-17.6",
+    "@bussin/list-comprehensions": "^0.1.1-2025-02-17.5",
     "0x": "^5.8.0",
     "benchmark": "^2.1.4",
     "clinic": "^13.0.0",
