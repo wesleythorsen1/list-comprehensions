@@ -2,6 +2,7 @@
 export * from './all';
 export * from './any';
 export * from './append';
+export * from './asEnumerable';
 export * from './chunk';
 export * from './concat';
 export * from './contains';

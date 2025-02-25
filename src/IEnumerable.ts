@@ -15,6 +15,7 @@ export interface IEnumerable<T> extends Iterable<T> {
   any(): boolean;
   any(predicate: (element: T) => boolean): boolean;
   append(value: T): IEnumerable<T>;
+  asEnumerable(): IEnumerable<T>;
   chunk(size: number): IEnumerable<IEnumerable<T>>;
   concat(enumerable: IEnumerable<T>): IEnumerable<T>;
   contains(value: T): boolean;

@@ -23,6 +23,7 @@ export class Enumerable<T> implements IEnumerable<T> {
   all = methods.all;
   any = methods.any;
   append = methods.append;
+  asEnumerable = methods.asEnumerable;
   chunk = methods.chunk;
   concat = methods.concat;
   contains = methods.contains;
@@ -90,6 +91,7 @@ export class Enumerable<T> implements IEnumerable<T> {
 Enumerable.prototype.all = methods.all;
 Enumerable.prototype.any = methods.any;
 Enumerable.prototype.append = methods.append;
+Enumerable.prototype.asEnumerable = methods.asEnumerable;
 Enumerable.prototype.chunk = methods.chunk;
 Enumerable.prototype.concat = methods.concat;
 Enumerable.prototype.contains = methods.contains;
