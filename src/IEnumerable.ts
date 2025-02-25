@@ -33,11 +33,11 @@ export interface IEnumerable<T> extends Iterable<T> {
   // firstBy;
   // firstOrDefault;
   // firstOrDefaultBy;
-  groupBy<TKey>(keySelector: (element: T) => TKey): IEnumerable<Grouping<TKey, T>>;
-  groupBy<TKey, TValue>(
-    keySelector: (element: T) => TKey,
-    valueSelector: (element: T) => TValue,
-  ): IEnumerable<Grouping<TKey, TValue>>;
+  // groupBy<TKey>(keySelector: (element: T) => TKey): IEnumerable<Grouping<TKey, T>>;
+  // groupBy<TKey, TValue>(
+  //   keySelector: (element: T) => TKey,
+  //   valueSelector: (element: T) => TValue,
+  // ): IEnumerable<Grouping<TKey, TValue>>;
   // intersect;
   // intersectBy;
   // leftJoin;

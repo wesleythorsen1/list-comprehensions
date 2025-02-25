@@ -1,6 +1,8 @@
 import { IEnumerable } from './IEnumerable';
 import * as methods from './methods';
-import { IsKeyValuePair } from './types';
+import { Comparable, IsKeyValuePair } from './types';
+
+const valueNotSet = Symbol('valueNotSet');
 
 export abstract class Enumerable<T> implements IEnumerable<T> {
   protected constructor(protected readonly source: Iterable<T>) {}
@@ -9,117 +11,395 @@ export abstract class Enumerable<T> implements IEnumerable<T> {
     return this.source[Symbol.iterator]();
   }
 
+  // #region from
   static from<T>(source: Iterable<T>): IEnumerable<T> {
-    return new Enumerable(source);
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+
+    result[Symbol.iterator] = source[Symbol.iterator];
+
+    return result;
   }
+  // #endregion
 
-  // static
-  static range = methods.range;
-  static repeat = methods.repeat;
-  static empty = methods.empty;
+  // #region empty
+  static empty<TValue>(): IEnumerable<TValue> {
+    return Enumerable.from(new Array<TValue>(0));
+  }
+  // #endregion
 
-  // instance
-  // aggregate = methods.aggregate;
-  all = methods.all;
-  any = methods.any;
-  append = methods.append;
-  asEnumerable = methods.asEnumerable;
-  chunk = methods.chunk;
-  concat = methods.concat;
-  contains = methods.contains;
-  count = methods.count;
-  countBy = methods.countBy;
-  // distinct = methods.distinct;
-  // distinctBy = methods.distinctBy;
-  // first = methods.first;
-  // firstBy = methods.firstBy;
-  // firstOrDefault = methods.firstOrDefault;
-  // firstOrDefaultBy = methods.firstOrDefaultBy;
-  // groupBy = methods.groupBy;
-  // intersect = methods.intersect;
-  // intersectBy = methods.intersectBy;
-  // leftJoin = methods.leftJoin;
-  // max = methods.max;
-  // maxBy = methods.maxBy;
-  min = methods.min;
-  minBy = methods.minBy;
-  select = methods.select;
-  selectMany = methods.selectMany;
-  skip = methods.skip;
-  take = methods.take;
-  toArray = methods.toArray;
-  toLookup = methods.toLookup;
-  // toMap = methods.toMap;
-  // toRecord: IsKeyValuePair<T> extends true
-  //   ? <TKey extends string | number | symbol, TValue>(
-  //       this: IEnumerable<[TKey, TValue]>,
-  //     ) => Record<TKey, TValue>
-  //   : never = methods.toRecord as any;
-  toRecord: IsKeyValuePair<T> extends true
-    ? {
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<[TKey, TValue]>,
-        ): Record<TKey, TValue>;
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
+  // #region range
+  static range(start: number, end: number): IEnumerable<number> {
+    const result = Object.create(Enumerable.prototype) as IEnumerable<number>;
+    result[Symbol.iterator] = function* () {
+      for (let i = start; i < end; i++) {
+        yield i;
       }
-    : {
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      } = methods.toRecord as any;
-  // toSet = methods.toSet;
-  // union = methods.union;
-  // unionBy = methods.unionBy;
-  where = methods.where;
-}
+    };
 
-// Enumerable.prototype.aggregate = methods.aggregate;
-Enumerable.prototype.all = methods.all;
-Enumerable.prototype.any = methods.any;
-Enumerable.prototype.append = methods.append;
-Enumerable.prototype.asEnumerable = methods.asEnumerable;
-Enumerable.prototype.chunk = methods.chunk;
-Enumerable.prototype.concat = methods.concat;
-Enumerable.prototype.contains = methods.contains;
-Enumerable.prototype.count = methods.count;
-Enumerable.prototype.countBy = methods.countBy;
-// Enumerable.prototype.distinct = methods.distinct;
-// Enumerable.prototype.distinctBy = methods.distinctBy;
-// Enumerable.prototype.first = methods.first;
-// Enumerable.prototype.firstBy = methods.firstBy;
-// Enumerable.prototype.firstOrDefault = methods.firstOrDefault;
-// Enumerable.prototype.firstOrDefaultBy = methods.firstOrDefaultBy;
-// Enumerable.prototype.groupBy = methods.groupBy;
-// Enumerable.prototype.intersect = methods.intersect;
-// Enumerable.prototype.intersectBy = methods.intersectBy;
-// Enumerable.prototype.leftJoin = methods.leftJoin;
-// Enumerable.prototype.max = methods.max;
-// Enumerable.prototype.maxBy = methods.maxBy;
-Enumerable.prototype.min = methods.min;
-Enumerable.prototype.minBy = methods.minBy;
-Enumerable.prototype.select = methods.select;
-Enumerable.prototype.selectMany = methods.selectMany;
-Enumerable.prototype.skip = methods.skip;
-Enumerable.prototype.take = methods.take;
-Enumerable.prototype.toArray = methods.toArray;
-// Enumerable.prototype.toLookup = methods.toLookup;
-// Enumerable.prototype.toMap = methods.toMap;
-Enumerable.prototype.toRecord = methods.toRecord;
-// Enumerable.prototype.toSet = methods.toSet;
-// Enumerable.prototype.union = methods.union;
-// Enumerable.prototype.unionBy = methods.unionBy;
-Enumerable.prototype.where = methods.where;
+    return result;
+  }
+  // #endregion
+
+  // #region repeat
+  static repeat<TValue>(value: TValue, count: number): IEnumerable<TValue> {
+    const result = Object.create(Enumerable.prototype) as IEnumerable<TValue>;
+    result[Symbol.iterator] = function* () {
+      for (let i = 0; i < count; i++) {
+        yield value;
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region all
+  all(predicate: (element: T) => boolean): boolean {
+    for (const element of this) {
+      if (!predicate(element)) return false;
+    }
+
+    return true;
+  }
+  // #endregion
+
+  // #region any
+  any(): boolean;
+  any(predicate: (element: T) => boolean = x => !!x): boolean {
+    for (const element of this) {
+      if (predicate(element)) return true;
+    }
+
+    return false;
+  }
+  // #endregion
+
+  // #region append
+  append(value: T): IEnumerable<T> {
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+    result[Symbol.iterator] = function* () {
+      for (const element of source) {
+        yield element;
+      }
+
+      yield value;
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region asEnumerable
+  asEnumerable(this: IEnumerable<T>): IEnumerable<T> {
+    return Enumerable.from(this);
+  }
+  // #endregion
+
+  // #region chunk
+  chunk(size: number): IEnumerable<IEnumerable<T>> {
+    if (size <= 0) throw new Error('batch size must be larger than 0');
+
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<IEnumerable<T>>;
+    result[Symbol.iterator] = function* () {
+      let batch = new Array<T>();
+
+      for (const element of source) {
+        batch.push(element);
+
+        if (batch.length === size) {
+          yield Enumerable.from(batch);
+          batch = [];
+        }
+      }
+
+      if (batch.length) {
+        yield Enumerable.from(batch);
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region concat
+  concat(enumerable: IEnumerable<T>): IEnumerable<T> {
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+    result[Symbol.iterator] = function* () {
+      for (const element of source) {
+        yield element;
+      }
+
+      for (const element of enumerable) {
+        yield element;
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region contains
+  contains(value: T): boolean;
+  contains(value: T, comparer: (x: T, y: T) => boolean = (x, y) => x === y): boolean {
+    for (const element of this) {
+      if (comparer(element, value)) return true;
+    }
+
+    return false;
+  }
+  // #endregion
+
+  // #region count
+  count(): number;
+  count(predicate: (element: T) => boolean = _ => true): number {
+    let i = 0;
+
+    for (const element of this) {
+      if (predicate(element)) {
+        i++;
+      }
+    }
+
+    return i;
+  }
+  // #endregion
+
+  // #region countBy
+  countBy<TKey>(keySelector: (element: T) => TKey): IEnumerable<[TKey, number]>;
+  countBy<TKey>(
+    keySelector: (element: T) => TKey,
+    comparer: (x: TKey, y: TKey) => boolean = (x, y) => x === y,
+  ): IEnumerable<[TKey, number]> {
+    const list: [TKey, number][] = [];
+
+    sourceIterator: for (const element of this) {
+      const key = keySelector(element);
+
+      for (const kvp of list) {
+        if (comparer(key, kvp[0])) {
+          kvp[1]++;
+
+          continue sourceIterator;
+        }
+      }
+
+      list.push([key, 1]);
+    }
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<[TKey, number]>;
+    result[Symbol.iterator] = function* () {
+      for (const [key, count] of list) {
+        yield [key, count];
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region min
+  min(this: Enumerable<T & Comparable>) {
+    return this.minBy(x => x);
+  }
+  // #endregion
+
+  // #region minBy
+  minBy<TValue extends Comparable>(valueSelector: (element: T) => TValue): T | null;
+  minBy<TValue>(
+    valueSelector: (element: T) => TValue,
+    comparer: (x: TValue, y: TValue) => number = (x: any, y: any) => x - y, // will break if called with non-comparable TValue
+  ): T | null {
+    let minElement: T | typeof valueNotSet = valueNotSet;
+    let minValue: TValue | typeof valueNotSet = valueNotSet;
+
+    for (const element of this) {
+      const value = valueSelector(element);
+
+      if (minValue === valueNotSet || comparer(minValue, value) > 0) {
+        minElement = element;
+        minValue = value;
+      }
+    }
+
+    if (minElement === valueNotSet) {
+      return null;
+    }
+
+    return minElement;
+  }
+  // #endregion
+
+  // #region select
+  select<TResult>(selector: (element: T, i: number) => TResult): IEnumerable<TResult> {
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<TResult>;
+    result[Symbol.iterator] = function* () {
+      let i = 0;
+      for (const element of source) {
+        yield selector(element, i++);
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region selectMany
+  selectMany<TResult>(
+    selector: (element: T, i: number) => IEnumerable<TResult>,
+  ): IEnumerable<TResult> {
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<TResult>;
+    result[Symbol.iterator] = function* () {
+      let i = 0;
+
+      for (const element of source) {
+        for (const innerElement of selector(element, i++)) {
+          yield innerElement;
+        }
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region skip
+  skip(count: number): IEnumerable<T> {
+    if (count < 0) throw new Error('count must be 0 or larger');
+
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+    result[Symbol.iterator] = function* () {
+      let current = 0;
+
+      for (const element of source) {
+        if (current < count) {
+          current++;
+          continue;
+        }
+
+        yield element;
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region take
+  take(count: number): IEnumerable<T> {
+    if (count < 0) throw new Error('count must be 0 or larger');
+
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+    result[Symbol.iterator] = function* () {
+      let current = 0;
+
+      for (const element of source) {
+        if (current >= count) {
+          return;
+        }
+
+        current++;
+        yield element;
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+
+  // #region toArray
+  toArray(): T[] {
+    return [...this];
+  }
+  // #endregion
+
+  // #region toLookup
+  toLookup = methods.toLookup;
+  // #endregion
+
+  // #region toRecord
+  // toRecord: IsKeyValuePair<T> extends true
+  //   ? {
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<[TKey, TValue]>,
+  //       ): Record<TKey, TValue>;
+  //       <TKey extends string | number | symbol>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //       ): Record<TKey, T>;
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //         valueSelector: (element: T) => TValue,
+  //       ): Record<TKey, TValue>;
+  //     }
+  //   : {
+  //       <TKey extends string | number | symbol>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //       ): Record<TKey, T>;
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //         valueSelector: (element: T) => TValue,
+  //       ): Record<TKey, TValue>;
+  //     } = methods.toRecord as any;
+
+  // toRecord<TKey extends string | number | symbol, TValue>(
+  //   this: IEnumerable<T & [TKey, TValue]>,
+  // ): Record<TKey, TValue>;
+  toRecord<TKey extends string | number | symbol>(
+    keySelector: (element: T) => TKey,
+  ): Record<TKey, T>;
+  toRecord<TKey extends string | number | symbol, TValue>(
+    keySelector: (element: T) => TKey,
+    valueSelector: (element: T) => TValue,
+  ): Record<TKey, TValue>;
+  toRecord<TKey extends string | number | symbol, TValue>(
+    keySelector?: (element: T) => TKey,
+    valueSelector?: (element: T) => TValue,
+  ): Record<TKey, TValue> {
+    if (!keySelector) {
+      // @ts-expect-error
+      return Object.fromEntries(this);
+    }
+
+    if (!valueSelector) {
+      return Object.fromEntries(this.select(e => [keySelector(e), e]));
+    }
+
+    return Object.fromEntries(this.select(e => [keySelector(e), valueSelector(e)]));
+  }
+  // #endregion
+
+  // #region where
+  where(predicate: (element: T, i: number) => boolean): IEnumerable<T> {
+    const source = this;
+
+    const result = Object.create(Enumerable.prototype) as IEnumerable<T>;
+    result[Symbol.iterator] = function* () {
+      let i = 0;
+      for (const element of source) {
+        if (predicate(element, i++)) {
+          yield element;
+        }
+      }
+    };
+
+    return result;
+  }
+  // #endregion
+}
