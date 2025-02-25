@@ -1,17 +1,25 @@
 import { Enumerable } from '../Enumerable';
-import { iterateRecord, toLookupIntermediary } from '../internals';
+import { IEnumerable } from '../IEnumerable';
 
-export function toLookup<T, TKey extends keyof any>(
-  this: Enumerable<T>,
-  keySelector: (element: T) => TKey,
-): Record<TKey, Enumerable<T>> {
-  const intermediary = toLookupIntermediary(this, keySelector);
+export function toLookup<TSource, TKey>(
+  this: Enumerable<TSource>,
+  keySelector: (element: TSource) => TKey,
+): Map<TKey, IEnumerable<TSource>> {
+  const map = new Map<TKey, TSource[] | IEnumerable<TSource>>();
 
-  const lookup = {} as Record<TKey, Enumerable<T>>;
+  for (const element of this) {
+    const key = keySelector(element);
 
-  for (const { key, value } of iterateRecord(intermediary)) {
-    lookup[key] = Enumerable.from(value);
+    if (!map.has(key)) {
+      map.set(key, [element]);
+    } else {
+      (map.get(key) as TSource[]).push(element);
+    }
   }
 
-  return lookup;
+  for (const [key, value] of map) {
+    map.set(key, Object.setPrototypeOf(value, Enumerable.prototype) as IEnumerable<TSource>);
+  }
+
+  return map as Map<TKey, IEnumerable<TSource>>;
 }

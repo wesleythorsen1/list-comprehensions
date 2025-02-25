@@ -1,4 +1,4 @@
-import { Comparable, IsKeyValuePair } from './types';
+import { Comparable, Grouping, IsKeyValuePair } from './types';
 
 export interface IEnumerable<T> extends Iterable<T> {
   // aggregate(accumulator: (accumulate: T, element: T) => T): T;
@@ -33,7 +33,11 @@ export interface IEnumerable<T> extends Iterable<T> {
   // firstBy;
   // firstOrDefault;
   // firstOrDefaultBy;
-  // groupBy;
+  groupBy<TKey>(keySelector: (element: T) => TKey): IEnumerable<Grouping<TKey, T>>;
+  groupBy<TKey, TValue>(
+    keySelector: (element: T) => TKey,
+    valueSelector: (element: T) => TValue,
+  ): IEnumerable<Grouping<TKey, TValue>>;
   // intersect;
   // intersectBy;
   // leftJoin;
@@ -54,7 +58,7 @@ export interface IEnumerable<T> extends Iterable<T> {
   skip(count: number): IEnumerable<T>;
   take(count: number): IEnumerable<T>;
   toArray(): T[];
-  // toLookup;
+  toLookup<TKey>(keySelector: (element: T) => TKey): Map<TKey, IEnumerable<T>>;
   // toMap;
   toRecord: IsKeyValuePair<T> extends true
     ? {

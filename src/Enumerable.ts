@@ -2,8 +2,8 @@ import { IEnumerable } from './IEnumerable';
 import * as methods from './methods';
 import { IsKeyValuePair } from './types';
 
-export class Enumerable<T> implements IEnumerable<T> {
-  private constructor(protected readonly source: Iterable<T>) {}
+export abstract class Enumerable<T> implements IEnumerable<T> {
+  protected constructor(protected readonly source: Iterable<T>) {}
 
   [Symbol.iterator](): Iterator<T> {
     return this.source[Symbol.iterator]();
@@ -48,7 +48,7 @@ export class Enumerable<T> implements IEnumerable<T> {
   skip = methods.skip;
   take = methods.take;
   toArray = methods.toArray;
-  // toLookup = methods.toLookup;
+  toLookup = methods.toLookup;
   // toMap = methods.toMap;
   // toRecord: IsKeyValuePair<T> extends true
   //   ? <TKey extends string | number | symbol, TValue>(

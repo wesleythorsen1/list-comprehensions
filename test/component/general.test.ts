@@ -1,6 +1,5 @@
+import '../../src/extensions/asEnumerable';
 import { Enumerable } from '../../src';
-
-import '../../src/extensions/Array';
 
 describe('for debugging', () => {
   it('debug random stuff', async () => {
@@ -20,21 +19,23 @@ describe('for debugging', () => {
 
     const record1 = e2.toRecord();
 
-    const record2 = [
+    const lookup = [
       { id: 1, name: 'a' },
       { id: 2, name: 'b' },
       { id: 3, name: 'c' },
+      { id: 1, name: 'd' },
     ]
       .asEnumerable()
-      .toRecord(el => el.id);
+      .toLookup(e => e.id);
 
-    const record3 = [
+    const group = [
       { id: 1, name: 'a' },
       { id: 2, name: 'b' },
       { id: 3, name: 'c' },
+      { id: 1, name: 'd' },
     ]
       .asEnumerable()
-      .toRecord(
+      .groupBy(
         el => el.id,
         el => el.name,
       );
