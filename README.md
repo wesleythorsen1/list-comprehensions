@@ -61,76 +61,76 @@ console.log(youngest.name); // 'David'
 
 (work in progress)
 
-- [x] aggregate
-- [x] aggregateBy
-- [ ] [all](./src/methods/all.ts)
-- [ ] [any](./src/methods/any.ts)
-- [ ] [append](./src/methods/append.ts)
-- [x] asEnumerable
-- [x] average
-- [x] cast
-- [ ] [chunk](./src/methods/chunk.ts)
-- [ ] [concat](./src/methods/concat.ts)
-- [ ] [contains](./src/methods/contains.ts)
-- [ ] [count](./src/methods/count.ts)
-- [ ] [countBy](./src/methods/countBy.ts)
-- [x] defaultIfEmpty
-- [x] distinct
-- [x] distinctBy
-- [x] elementAt
-- [x] elementAtOrDefault
-- [x] empty
-- [x] except
-- [x] exceptBy
-- [x] first
-- [x] firstOrDefault
-- [x] groupBy
-- [x] groupJoin
-- [x] index
-- [x] intersect
-- [x] intersectBy
-- [x] join
-- [x] last
-- [x] lastOrDefault
-- [x] longCount
-- [x] max
-- [x] maxBy
-- [x] min
-- [ ] [minBy](./src/methods/minBy.ts)
-- [x] ofType
-- [x] order
-- [x] orderBy
-- [x] orderByDescending
-- [x] orderDescending
-- [x] prepend
-- [ ] [range](./src/methods/range.ts)
-- [ ] [repeat](./src/methods/repeat.ts)
-- [ ] [reverse](./src/methods/reverse.ts)
-- [ ] [select](./src/methods/select.ts)
-- [ ] [selectMany](./src/methods/selectMany.ts)
-- [x] sequenceEqual
-- [x] single
-- [x] singleOrDefault
-- [ ] [skip](./src/methods/skip.ts)
-- [x] skipLast
-- [x] skipWhile
-- [x] sum
-- [ ] [take](./src/methods/take.ts)
-- [x] takeLast
-- [x] takeWhile
-- [x] thenBy
-- [x] thenByDescending
-- [x] toArray
-- [x] toList
-- [x] toLookup
-- [x] toMap
-- [ ] [toRecord](./src/methods/toRecord.ts)
-- [x] toSet
-- [x] tryGetNonEnumeratedCount
-- [x] union
-- [x] unionBy
-- [ ] [where](./src/methods/where.ts)
-- [x] zip
+- [ ] aggregate
+- [ ] aggregateBy
+- [x] [all](./src/methods/all.ts)
+- [x] [any](./src/methods/any.ts)
+- [x] [append](./src/methods/append.ts)
+- [ ] asEnumerable
+- [ ] average
+- [ ] cast
+- [x] [chunk](./src/methods/chunk.ts)
+- [x] [concat](./src/methods/concat.ts)
+- [x] [contains](./src/methods/contains.ts)
+- [x] [count](./src/methods/count.ts)
+- [x] [countBy](./src/methods/countBy.ts)
+- [ ] defaultIfEmpty
+- [ ] distinct
+- [ ] distinctBy
+- [ ] elementAt
+- [ ] elementAtOrDefault
+- [ ] empty
+- [ ] except
+- [ ] exceptBy
+- [ ] first
+- [ ] firstOrDefault
+- [ ] groupBy
+- [ ] groupJoin
+- [ ] index
+- [ ] intersect
+- [ ] intersectBy
+- [ ] join
+- [ ] last
+- [ ] lastOrDefault
+- [ ] longCount
+- [ ] max
+- [ ] maxBy
+- [ ] min
+- [x] [minBy](./src/methods/minBy.ts)
+- [ ] ofType
+- [ ] order
+- [ ] orderBy
+- [ ] orderByDescending
+- [ ] orderDescending
+- [ ] prepend
+- [x] [range](./src/methods/range.ts)
+- [x] [repeat](./src/methods/repeat.ts)
+- [x] [reverse](./src/methods/reverse.ts)
+- [x] [select](./src/methods/select.ts)
+- [x] [selectMany](./src/methods/selectMany.ts)
+- [ ] sequenceEqual
+- [ ] single
+- [ ] singleOrDefault
+- [x] [skip](./src/methods/skip.ts)
+- [ ] skipLast
+- [ ] skipWhile
+- [ ] sum
+- [x] [take](./src/methods/take.ts)
+- [ ] takeLast
+- [ ] takeWhile
+- [ ] thenBy
+- [ ] thenByDescending
+- [ ] toArray
+- [ ] toList
+- [ ] toLookup
+- [ ] toMap
+- [x] [toRecord](./src/methods/toRecord.ts)
+- [ ] toSet
+- [ ] tryGetNonEnumeratedCount
+- [ ] union
+- [ ] unionBy
+- [x] [where](./src/methods/where.ts)
+- [ ] zip
 
 ## Support
 
