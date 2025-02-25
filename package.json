@@ -1,6 +1,6 @@
 {
   "name": "@bussin/list-comprehensions",
-  "version": "0.1.1-2025-02-17.8",
+  "version": "0.1.1-2025-02-17.9",
   "description": "TypeScript list comprehensions with deferred execution.",
   "private": false,
   "repository": {
@@ -28,7 +28,7 @@
     }
   },
   "scripts": {
-    "publish": "./bin/publish",
+    "release": "./bin/publish",
     "build": "npm run clean && npm ci && concurrently 'npm:build:cjs' 'npm:build:es' 'npm:build:types'",
     "build:cjs": "tsc -p tsconfig.cjs.json && tsc-alias",
     "build:es": "tsc -p tsconfig.es.json && tsc-alias",
