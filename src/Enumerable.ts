@@ -1,5 +1,6 @@
 import { IEnumerable } from './IEnumerable';
 import * as methods from './methods';
+import { IsKeyValuePair } from './types';
 
 export class Enumerable<T> implements IEnumerable<T> {
   private constructor(protected readonly source: Iterable<T>) {}
@@ -48,6 +49,37 @@ export class Enumerable<T> implements IEnumerable<T> {
   toArray = methods.toArray;
   // toLookup = methods.toLookup;
   // toMap = methods.toMap;
+  // toRecord: IsKeyValuePair<T> extends true
+  //   ? <TKey extends string | number | symbol, TValue>(
+  //       this: IEnumerable<[TKey, TValue]>,
+  //     ) => Record<TKey, TValue>
+  //   : never = methods.toRecord as any;
+  toRecord: IsKeyValuePair<T> extends true
+    ? {
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<[TKey, TValue]>,
+        ): Record<TKey, TValue>;
+        <TKey extends string | number | symbol>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+        ): Record<TKey, T>;
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+          valueSelector: (element: T) => TValue,
+        ): Record<TKey, TValue>;
+      }
+    : {
+        <TKey extends string | number | symbol>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+        ): Record<TKey, T>;
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+          valueSelector: (element: T) => TValue,
+        ): Record<TKey, TValue>;
+      } = methods.toRecord as any;
   // toSet = methods.toSet;
   // union = methods.union;
   // unionBy = methods.unionBy;
@@ -84,6 +116,7 @@ Enumerable.prototype.take = methods.take;
 Enumerable.prototype.toArray = methods.toArray;
 // Enumerable.prototype.toLookup = methods.toLookup;
 // Enumerable.prototype.toMap = methods.toMap;
+Enumerable.prototype.toRecord = methods.toRecord;
 // Enumerable.prototype.toSet = methods.toSet;
 // Enumerable.prototype.union = methods.union;
 // Enumerable.prototype.unionBy = methods.unionBy;

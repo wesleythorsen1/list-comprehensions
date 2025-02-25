@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('contains', () => {
   it('should return false for an empty enumerable', () => {

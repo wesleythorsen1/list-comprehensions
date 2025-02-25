@@ -1,4 +1,4 @@
-import { Comparable } from './types';
+import { Comparable, IsKeyValuePair } from './types';
 
 export interface IEnumerable<T> extends Iterable<T> {
   // aggregate(accumulator: (accumulate: T, element: T) => T): T;
@@ -11,7 +11,6 @@ export interface IEnumerable<T> extends Iterable<T> {
   //   accumulator: (accumulate: TAccumulate, element: T) => TAccumulate,
   //   resultSelector: (accumulate: TAccumulate) => TResult,
   // ): TResult;
-
   all(predicate: (element: T) => boolean): boolean;
   any(): boolean;
   any(predicate: (element: T) => boolean): boolean;
@@ -56,6 +55,32 @@ export interface IEnumerable<T> extends Iterable<T> {
   toArray(): T[];
   // toLookup;
   // toMap;
+  toRecord: IsKeyValuePair<T> extends true
+    ? {
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<[TKey, TValue]>,
+        ): Record<TKey, TValue>;
+        <TKey extends string | number | symbol>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+        ): Record<TKey, T>;
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+          valueSelector: (element: T) => TValue,
+        ): Record<TKey, TValue>;
+      }
+    : {
+        <TKey extends string | number | symbol>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+        ): Record<TKey, T>;
+        <TKey extends string | number | symbol, TValue>(
+          this: IEnumerable<T>,
+          keySelector: (element: T) => TKey,
+          valueSelector: (element: T) => TValue,
+        ): Record<TKey, TValue>;
+      };
   // toSet;
   // union;
   // unionBy;

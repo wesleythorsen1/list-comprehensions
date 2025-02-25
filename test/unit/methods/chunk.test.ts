@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('chunk', () => {
   it('should throw an error when size is less than or equal to 0', () => {

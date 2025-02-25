@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('any', () => {
   it('should return false for an empty iterable with no predicate', () => {

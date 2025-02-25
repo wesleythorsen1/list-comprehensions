@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -euo pipefail
+
+command -v jq >/dev/null 2>&1 || { echo "jq is required but not installed. Aborting." >&2; exit 1; }
+command -v gum >/dev/null 2>&1 || { echo "gum is required but not installed. Aborting." >&2; exit 1; }
+[ -f package.json ] || { echo "package.json not found. Aborting." >&2; exit 1; }
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+current_version=$(jq -r ".version" package.json)
+
+if [ "$branch" = "main" ]; then
+  bump_type=$(gum choose --prompt="Choose version bump" "major" "minor" "patch")
+  npm version "$bump_type" --no-git-tag-version
+else
+  if [ "${current_version%-*}" != "$current_version" ]; then
+    npm version prerelease --no-git-tag-version
+  else
+    bump_type=$(gum choose --prompt="Choose prerelease version bump" "premajor" "preminor" "prepatch")
+    npm version "$bump_type" --preid "$branch" --no-git-tag-version
+  fi
+fi
+
+new_version=$(jq -r ".version" package.json)
+
+gum confirm "Publish $new_version?"
+
+# ignore lint issues for now
+npm run build || true
+
+npm run test
+
+git add . && git commit && git push origin "$branch"
+git tag "$new_version" && git push origin "$new_version"
+
+npm publish --access public

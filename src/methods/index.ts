@@ -31,6 +31,7 @@ export * from './take';
 export * from './toArray';
 // export * from './toLookup';
 // export * from './toMap';
+export * from './toRecord';
 // export * from './toSet';
 // export * from './union';
 // export * from './unionBy';

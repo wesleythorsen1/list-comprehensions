@@ -1,4 +1,4 @@
-import { Enumerable } from '@src/Enumerable';
+import { Enumerable } from '../../../src';
 
 describe('skip', () => {
   it('should throw an error when count is negative', () => {
