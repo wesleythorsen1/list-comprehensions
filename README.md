@@ -2,7 +2,7 @@
 
 [![NPM Version](https://img.shields.io/npm/v/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions) [![NPM Version](https://img.shields.io/npm/dw/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions) [![NPM Version](https://img.shields.io/bundlephobia/min/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions)
 
-A blazingly fast and strongly typed list comprehension library built with TypeScript. Uses deferred execution for extremely performant operations. Provides prototype extension on all Iterable NodeJS classes for more fluent use (`Array`, `Map`, `Set`, etc., this is optional, opt-in). Heavily influenced by C#'s [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/linq/) library.
+A strongly typed list comprehension library built with TypeScript. Uses deferred execution for more performant operations. Provides prototype extensions on all `Iterable<T>` NodeJS classes for more fluent use (`Array`, `Map`, `Set`, etc., this is strictly opt-in). Inspired by [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/linq/).
 
 License: [MIT](https://opensource.org/licenses/MIT)
 
@@ -59,38 +59,78 @@ console.log(youngest.name); // 'David'
 
 ## Methods
 
-- all
-- any
-- append
-- batch
-- concat
-- count
-- distinct
-- distinctBy
-- empty
-- first
-- firstBy
-- firstOrDefault
-- firstOrDefaultBy
-- groupBy
-- intersect
-- intersectBy
-- max
-- maxBy
-- min
-- minBy
-- range
-- repeat
-- select
-- skip
-- take
-- toArray
-- toLookup
-- toMap
-- toSet
-- union
-- unionBy
-- where
+(work in progress)
+
+- [ ] aggregate
+- [ ] aggregateBy
+- [x] [all](./src/methods/all.ts)
+- [x] [any](./src/methods/any.ts)
+- [x] [append](./src/methods/append.ts)
+- [ ] asEnumerable
+- [ ] average
+- [ ] cast
+- [x] [chunk](./src/methods/chunk.ts)
+- [x] [concat](./src/methods/concat.ts)
+- [x] [contains](./src/methods/contains.ts)
+- [x] [count](./src/methods/count.ts)
+- [x] [countBy](./src/methods/countBy.ts)
+- [ ] defaultIfEmpty
+- [ ] distinct
+- [ ] distinctBy
+- [ ] elementAt
+- [ ] elementAtOrDefault
+- [ ] empty
+- [ ] except
+- [ ] exceptBy
+- [ ] first
+- [ ] firstOrDefault
+- [ ] groupBy
+- [ ] groupJoin
+- [ ] index
+- [ ] intersect
+- [ ] intersectBy
+- [ ] join
+- [ ] last
+- [ ] lastOrDefault
+- [ ] longCount
+- [ ] max
+- [ ] maxBy
+- [ ] min
+- [x] [minBy](./src/methods/minBy.ts)
+- [ ] ofType
+- [ ] order
+- [ ] orderBy
+- [ ] orderByDescending
+- [ ] orderDescending
+- [ ] prepend
+- [x] [range](./src/methods/range.ts)
+- [x] [repeat](./src/methods/repeat.ts)
+- [x] [reverse](./src/methods/reverse.ts)
+- [x] [select](./src/methods/select.ts)
+- [x] [selectMany](./src/methods/selectMany.ts)
+- [ ] sequenceEqual
+- [ ] single
+- [ ] singleOrDefault
+- [x] [skip](./src/methods/skip.ts)
+- [ ] skipLast
+- [ ] skipWhile
+- [ ] sum
+- [x] [take](./src/methods/take.ts)
+- [ ] takeLast
+- [ ] takeWhile
+- [ ] thenBy
+- [ ] thenByDescending
+- [ ] toArray
+- [ ] toList
+- [ ] toLookup
+- [ ] toMap
+- [x] [toRecord](./src/methods/toRecord.ts)
+- [ ] toSet
+- [ ] tryGetNonEnumeratedCount
+- [ ] union
+- [ ] unionBy
+- [x] [where](./src/methods/where.ts)
+- [ ] zip
 
 ## Support
 

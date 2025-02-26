@@ -6,7 +6,7 @@ export function skip<TSource>(this: IEnumerable<TSource>, count: number): IEnume
 
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       let current = 0;
 
@@ -19,7 +19,5 @@ export function skip<TSource>(this: IEnumerable<TSource>, count: number): IEnume
         yield element;
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TSource>;
+  });
 }

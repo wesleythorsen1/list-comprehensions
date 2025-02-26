@@ -7,7 +7,7 @@ export function where<TSource>(
 ): IEnumerable<TSource> {
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       let i = 0;
       for (const element of source) {
@@ -16,7 +16,5 @@ export function where<TSource>(
         }
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TSource>;
+  });
 }

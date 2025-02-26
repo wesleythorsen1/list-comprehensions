@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('count', () => {
   it('should return 0 for an empty enumerable when no predicate is provided', () => {

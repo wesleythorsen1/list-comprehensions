@@ -1,5 +1,7 @@
-node_modules/
+.clinic/
+*/**/*.0x/
 build/
-outputs/
-dist/
 coverage/
+dist/
+node_modules/
+outputs/

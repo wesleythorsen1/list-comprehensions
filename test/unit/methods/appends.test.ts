@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('append', () => {
   it('should return a new enumerable that yields only the appended value when the source is empty', () => {

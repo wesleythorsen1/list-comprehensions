@@ -1,0 +1,24 @@
+{
+  "name": "benchmark",
+  "version": "1.0.0",
+  "main": "run.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@bussin/list-comprehensions": "^0.1.1-2025-02-17.5",
+    "0x": "^5.8.0",
+    "benchmark": "^2.1.4",
+    "clinic": "^13.0.0",
+    "lodash": "^4.17.21",
+    "luxon": "^3.5.0",
+    "microtime": "^3.1.1",
+    "prettier": "^3.5.1",
+    "underscore": "^1.13.7"
+  }
+}

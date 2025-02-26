@@ -7,14 +7,12 @@ export function select<TSource, TResult>(
 ): IEnumerable<TResult> {
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       let i = 0;
       for (const element of source) {
         yield selector(element, i++);
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TResult>;
+  });
 }

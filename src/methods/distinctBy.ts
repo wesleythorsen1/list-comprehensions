@@ -1,20 +1,20 @@
-import { Enumerable } from '../Enumerable';
+// import { Enumerable } from '../Enumerable';
 
-export function distinctBy<T, TKey>(this: Enumerable<T>, selector: (element: T) => TKey) {
-  const inner = this;
-  const set = new Set<TKey>();
+// export function distinctBy<T, TKey>(this: Enumerable<T>, selector: (element: T) => TKey) {
+//   const inner = this;
+//   const set = new Set<TKey>();
 
-  function* generator() {
-    for (const element of inner) {
-      const key = selector(element);
+//   function* generator() {
+//     for (const element of inner) {
+//       const key = selector(element);
 
-      if (set.has(key)) continue;
+//       if (set.has(key)) continue;
 
-      set.add(key);
+//       set.add(key);
 
-      yield element;
-    }
-  }
+//       yield element;
+//     }
+//   }
 
-  return Enumerable.from(generator);
-}
+//   return Enumerable.from(generator);
+// }

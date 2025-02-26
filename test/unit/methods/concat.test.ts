@@ -1,4 +1,4 @@
-import { Enumerable } from '@src/Enumerable';
+import { Enumerable } from '../../../src';
 
 describe('concat', () => {
   it('should return an empty enumerable when both sources are empty', () => {

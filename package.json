@@ -1,6 +1,6 @@
 {
   "name": "@bussin/list-comprehensions",
-  "version": "0.1.0",
+  "version": "0.1.1-2025-02-26.1",
   "description": "TypeScript list comprehensions with deferred execution.",
   "private": false,
   "repository": {
@@ -10,14 +10,33 @@
   "main": "./dist-cjs/index.js",
   "module": "./dist-es/index.js",
   "types": "./dist-types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist-es/index.js",
+      "require": "./dist-cjs/index.js",
+      "types": "./dist-types/index.d.ts"
+    },
+    "./extensions": {
+      "import": "./dist-es/extensions/index.js",
+      "require": "./dist-cjs/extensions/index.js",
+      "types": "./dist-types/extensions/index.d.ts"
+    },
+    "./extensions/*": {
+      "import": "./dist-es/extensions/*.js",
+      "require": "./dist-cjs/extensions/*.js",
+      "types": "./dist-types/extensions/*.d.ts"
+    }
+  },
   "scripts": {
-    "build": "npm ci && concurrently 'npm:build:cjs' 'npm:build:es' 'npm:build:types'",
+    "release": "./bin/release",
+    "build": "npm run clean && npm ci && concurrently 'npm:build:cjs' 'npm:build:es' 'npm:build:types'",
     "build:cjs": "tsc -p tsconfig.cjs.json && tsc-alias",
     "build:es": "tsc -p tsconfig.es.json && tsc-alias",
     "build:types": "tsc -p tsconfig.types.json && tsc-alias",
     "clean": "rimraf ./dist-* && rimraf *.tsbuildinfo",
     "lint": "eslint --fix */**/*.ts && prettier --write */**/*.ts",
-    "test": "jest"
+    "test": "jest",
+    "benchmark": "./bin/benchmark"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -25,6 +44,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^20.11.19",
     "concurrently": "7.0.0",
+    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",

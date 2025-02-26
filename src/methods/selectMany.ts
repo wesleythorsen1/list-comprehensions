@@ -7,7 +7,7 @@ export function selectMany<TSource, TResult>(
 ): IEnumerable<TResult> {
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       let i = 0;
       for (const element of source) {
@@ -16,7 +16,5 @@ export function selectMany<TSource, TResult>(
         }
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TResult>;
+  });
 }

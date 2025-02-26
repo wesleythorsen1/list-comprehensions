@@ -4,7 +4,7 @@ import { IEnumerable } from '../IEnumerable';
 export function append<TSource>(this: IEnumerable<TSource>, value: TSource): IEnumerable<TSource> {
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       for (const element of source) {
         yield element;
@@ -12,7 +12,5 @@ export function append<TSource>(this: IEnumerable<TSource>, value: TSource): IEn
 
       yield value;
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TSource>;
+  });
 }
