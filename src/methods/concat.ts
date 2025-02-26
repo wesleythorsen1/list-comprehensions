@@ -7,7 +7,7 @@ export function concat<TSource>(
 ): IEnumerable<TSource> {
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       for (const element of source) {
         yield element;
@@ -17,7 +17,5 @@ export function concat<TSource>(
         yield element;
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<TSource>;
+  });
 }

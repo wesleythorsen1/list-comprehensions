@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "importHelpers": false,
     "module": "commonjs",
+    "moduleResolution": "node",
     "noEmitHelpers": false,
     "outDir": "dist-cjs",
     "rootDir": "src",

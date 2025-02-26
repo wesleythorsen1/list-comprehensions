@@ -1,16 +1,32 @@
 import { Enumerable } from '../Enumerable';
+import { Comparable } from '../types';
 
-export function maxBy<T, TValue>(this: Enumerable<T>, selector: (element: T) => TValue) {
-  let max: T | null = null;
-  let maxValue: TValue | null = null;
+const valueNotSet = Symbol('valueNotSet');
+
+export function maxBy<TSource, TValue extends Comparable>(
+  this: Enumerable<TSource>,
+  valueSelector: (element: TSource) => TValue,
+): TSource | null;
+export function maxBy<TSource, TValue>(
+  this: Enumerable<TSource>,
+  valueSelector: (element: TSource) => TValue,
+  comparer: (x: TValue, y: TValue) => number = (x: any, y: any) => x - y, // will break if called with non-comparable TValue
+): TSource | null {
+  let maxElement: TSource | typeof valueNotSet = valueNotSet;
+  let maxValue: TValue | typeof valueNotSet = valueNotSet;
 
   for (const element of this) {
-    const elementValue = selector(element);
-    if (maxValue === null || maxValue === undefined || maxValue < elementValue) {
-      max = element;
-      maxValue = elementValue;
+    const value = valueSelector(element);
+
+    if (maxValue === valueNotSet || comparer(maxValue, value) < 0) {
+      maxElement = element;
+      maxValue = value;
     }
   }
 
-  return max;
+  if (maxElement === valueNotSet) {
+    return null;
+  }
+
+  return maxElement;
 }

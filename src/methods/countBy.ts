@@ -26,13 +26,11 @@ export function countBy<TSource, TKey>(
     list.push([key, 1]);
   }
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       for (const [key, count] of list) {
         yield [key, count];
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<[TKey, number]>;
+  });
 }

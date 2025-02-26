@@ -9,7 +9,7 @@ export function chunk<TSource>(
 
   const source = this;
 
-  const result = {
+  return Enumerable.from({
     *[Symbol.iterator]() {
       let batch = new Array<TSource>();
 
@@ -26,7 +26,5 @@ export function chunk<TSource>(
         yield Enumerable.from(batch);
       }
     },
-  };
-
-  return Object.setPrototypeOf(result, Enumerable.prototype) as IEnumerable<IEnumerable<TSource>>;
+  });
 }

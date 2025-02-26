@@ -1,4 +1,4 @@
-import { Enumerable } from '@src';
+import { Enumerable } from '../../../src';
 
 describe('countBy', () => {
   it('should return an empty enumerable when the source is empty', () => {
