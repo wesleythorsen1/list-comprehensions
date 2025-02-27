@@ -1,15 +1,21 @@
 import { IEnumerable } from './IEnumerable';
-import * as methods from './methods';
 import { Comparable, IsKeyValuePair } from './types';
 
 const valueNotSet = Symbol('valueNotSet');
 
 export abstract class Enumerable<T> implements IEnumerable<T> {
-  protected constructor(protected readonly source: Iterable<T>) {}
+  // public readonly [Symbol.iterator]!: () => Iterator<T>;
 
-  [Symbol.iterator](): Iterator<T> {
-    return this.source[Symbol.iterator]();
-  }
+  // protected constructor(iterator: () => Iterator<T>) {
+  //   this[Symbol.iterator] = iterator;
+  // }
+
+  abstract [Symbol.iterator](): Iterator<T>;
+
+  // Fold All Regions: ⌘ K 8
+  // Unfold All: ⌘ K J
+
+  // #region static
 
   // #region from
   static from<T>(source: Iterable<T>): IEnumerable<T> {
@@ -51,6 +57,8 @@ export abstract class Enumerable<T> implements IEnumerable<T> {
 
     return result;
   }
+  // #endregion
+
   // #endregion
 
   // #region all
@@ -204,7 +212,7 @@ export abstract class Enumerable<T> implements IEnumerable<T> {
   // #endregion
 
   // #region min
-  min(this: Enumerable<T & Comparable>) {
+  min(this: Enumerable<T & Comparable>): T | null {
     return this.minBy(x => x);
   }
   // #endregion
@@ -327,62 +335,76 @@ export abstract class Enumerable<T> implements IEnumerable<T> {
   // #endregion
 
   // #region toLookup
-  toLookup = methods.toLookup;
+  toLookup<TKey>(keySelector: (element: T) => TKey): Map<TKey, IEnumerable<T>> {
+    const map = new Map<TKey, IEnumerable<T>>();
+
+    for (const element of this) {
+      const key = keySelector(element);
+
+      if (!map.has(key)) {
+        map.set(key, Enumerable.from([element]));
+      } else {
+        map.get(key)?.append(element);
+      }
+    }
+
+    return map;
+  }
   // #endregion
 
   // #region toRecord
-  // toRecord: IsKeyValuePair<T> extends true
-  //   ? {
-  //       <TKey extends string | number | symbol, TValue>(
-  //         this: IEnumerable<[TKey, TValue]>,
-  //       ): Record<TKey, TValue>;
-  //       <TKey extends string | number | symbol>(
-  //         this: IEnumerable<T>,
-  //         keySelector: (element: T) => TKey,
-  //       ): Record<TKey, T>;
-  //       <TKey extends string | number | symbol, TValue>(
-  //         this: IEnumerable<T>,
-  //         keySelector: (element: T) => TKey,
-  //         valueSelector: (element: T) => TValue,
-  //       ): Record<TKey, TValue>;
-  //     }
-  //   : {
-  //       <TKey extends string | number | symbol>(
-  //         this: IEnumerable<T>,
-  //         keySelector: (element: T) => TKey,
-  //       ): Record<TKey, T>;
-  //       <TKey extends string | number | symbol, TValue>(
-  //         this: IEnumerable<T>,
-  //         keySelector: (element: T) => TKey,
-  //         valueSelector: (element: T) => TValue,
-  //       ): Record<TKey, TValue>;
-  //     } = methods.toRecord as any;
+  // // toRecord: IsKeyValuePair<T> extends true
+  // //   ? {
+  // //       <TKey extends string | number | symbol, TValue>(
+  // //         this: IEnumerable<[TKey, TValue]>,
+  // //       ): Record<TKey, TValue>;
+  // //       <TKey extends string | number | symbol>(
+  // //         this: IEnumerable<T>,
+  // //         keySelector: (element: T) => TKey,
+  // //       ): Record<TKey, T>;
+  // //       <TKey extends string | number | symbol, TValue>(
+  // //         this: IEnumerable<T>,
+  // //         keySelector: (element: T) => TKey,
+  // //         valueSelector: (element: T) => TValue,
+  // //       ): Record<TKey, TValue>;
+  // //     }
+  // //   : {
+  // //       <TKey extends string | number | symbol>(
+  // //         this: IEnumerable<T>,
+  // //         keySelector: (element: T) => TKey,
+  // //       ): Record<TKey, T>;
+  // //       <TKey extends string | number | symbol, TValue>(
+  // //         this: IEnumerable<T>,
+  // //         keySelector: (element: T) => TKey,
+  // //         valueSelector: (element: T) => TValue,
+  // //       ): Record<TKey, TValue>;
+  // //     } = methods.toRecord as any;
 
+  // // toRecord<TKey extends string | number | symbol, TValue>(
+  // //   this: IEnumerable<T & [TKey, TValue]>,
+  // // ): Record<TKey, TValue>;
+  // toRecord<TKey extends string | number | symbol>(
+  //   keySelector: (element: T) => TKey,
+  // ): Record<TKey, T>;
   // toRecord<TKey extends string | number | symbol, TValue>(
-  //   this: IEnumerable<T & [TKey, TValue]>,
+  //   keySelector: (element: T) => TKey,
+  //   valueSelector: (element: T) => TValue,
   // ): Record<TKey, TValue>;
-  toRecord<TKey extends string | number | symbol>(
-    keySelector: (element: T) => TKey,
-  ): Record<TKey, T>;
-  toRecord<TKey extends string | number | symbol, TValue>(
-    keySelector: (element: T) => TKey,
-    valueSelector: (element: T) => TValue,
-  ): Record<TKey, TValue>;
-  toRecord<TKey extends string | number | symbol, TValue>(
-    keySelector?: (element: T) => TKey,
-    valueSelector?: (element: T) => TValue,
-  ): Record<TKey, TValue> {
-    if (!keySelector) {
-      // @ts-expect-error
-      return Object.fromEntries(this);
-    }
+  // toRecord<TKey extends string | number | symbol, TValue>(
+  //   keySelector?: (element: T) => TKey,
+  //   valueSelector?: (element: T) => TValue,
+  // ): Record<TKey, TValue> {
+  //   if (!keySelector) {
+  //     // @ts-expect-error
+  //     return Object.fromEntries(this);
+  //   }
 
-    if (!valueSelector) {
-      return Object.fromEntries(this.select(e => [keySelector(e), e]));
-    }
+  //   if (!valueSelector) {
+  //     return Object.fromEntries(this.select(e => [keySelector(e), e]));
+  //   }
 
-    return Object.fromEntries(this.select(e => [keySelector(e), valueSelector(e)]));
-  }
+  //   return Object.fromEntries(this.select(e => [keySelector(e), valueSelector(e)]));
+  // }
   // #endregion
 
   // #region where

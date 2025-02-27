@@ -27,23 +27,11 @@ export interface IEnumerable<T> extends Iterable<T> {
     keySelector: (element: T) => TKey,
     comparer: (x: TKey, y: TKey) => boolean,
   ): IEnumerable<[TKey, number]>;
-  // distinct;
-  // distinctBy;
-  // first;
-  // firstBy;
-  // firstOrDefault;
-  // firstOrDefaultBy;
   // groupBy<TKey>(keySelector: (element: T) => TKey): IEnumerable<Grouping<TKey, T>>;
   // groupBy<TKey, TValue>(
   //   keySelector: (element: T) => TKey,
   //   valueSelector: (element: T) => TValue,
   // ): IEnumerable<Grouping<TKey, TValue>>;
-  // intersect;
-  // intersectBy;
-  // leftJoin;
-  // max;
-  // maxBy;
-  // min;
   minBy<TValue extends Comparable>(valueSelector: (element: T) => TValue): T | null;
   minBy<TValue>(
     valueSelector: (element: T) => TValue,
@@ -59,36 +47,32 @@ export interface IEnumerable<T> extends Iterable<T> {
   take(count: number): IEnumerable<T>;
   toArray(): T[];
   toLookup<TKey>(keySelector: (element: T) => TKey): Map<TKey, IEnumerable<T>>;
-  // toMap;
-  toRecord: IsKeyValuePair<T> extends true
-    ? {
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<[TKey, TValue]>,
-        ): Record<TKey, TValue>;
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      }
-    : {
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      };
-  // toSet;
-  // union;
-  // unionBy;
+  // toRecord: IsKeyValuePair<T> extends true
+  //   ? {
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<[TKey, TValue]>,
+  //       ): Record<TKey, TValue>;
+  //       <TKey extends string | number | symbol>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //       ): Record<TKey, T>;
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //         valueSelector: (element: T) => TValue,
+  //       ): Record<TKey, TValue>;
+  //     }
+  //   : {
+  //       <TKey extends string | number | symbol>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //       ): Record<TKey, T>;
+  //       <TKey extends string | number | symbol, TValue>(
+  //         this: IEnumerable<T>,
+  //         keySelector: (element: T) => TKey,
+  //         valueSelector: (element: T) => TValue,
+  //       ): Record<TKey, TValue>;
+  //     };
   where(predicate: (element: T) => boolean): IEnumerable<T>;
   where(predicate: (element: T, i: number) => boolean): IEnumerable<T>;
 }
