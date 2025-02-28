@@ -1,12 +1,27 @@
+import { compileOperations } from './code-gen';
 import { IEnumerable } from './IEnumerable';
 import * as methods from './methods';
-import { Comparable, Grouping, IsKeyValuePair } from './types';
+import { Comparable, Grouping, IsKeyValuePair, Operation } from './types';
 
 export class Enumerable<T> implements IEnumerable<T> {
+  public operations: Operation[] = [];
+
   protected constructor(protected readonly source: Iterable<T>) {}
 
   [Symbol.iterator](): Iterator<T> {
-    return this.source[Symbol.iterator]();
+    const sourceArr = Array.from(this.source);
+
+    if (this.operations.length === 0) {
+      return sourceArr[Symbol.iterator]();
+    }
+
+    const fusedFn = compileOperations(this.operations);
+
+    this.operations = [];
+
+    const resultArr = fusedFn(sourceArr);
+
+    return resultArr[Symbol.iterator]();
   }
 
   // static

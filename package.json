@@ -1,6 +1,6 @@
 {
   "name": "@bussin/list-comprehensions",
-  "version": "0.2.0",
+  "version": "0.3.0-code-gen.0",
   "description": "TypeScript list comprehensions with deferred execution.",
   "private": false,
   "repository": {

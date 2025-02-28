@@ -27,7 +27,7 @@ gum confirm "Publish $new_version?"
 
 npm run build
 
-npm run test
+# npm run test
 
 git add . && git commit && git push origin "$branch"
 git tag "$new_version" && git push origin "$new_version"

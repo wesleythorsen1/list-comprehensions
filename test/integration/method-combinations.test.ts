@@ -16,4 +16,15 @@ describe('method combinations', () => {
     expect(result[1].key).toEqual('odd');
     expect(result[1].toArray()).toEqual([21, 27, 33]);
   });
+
+  it('array -> select -> where -> select -> toArray', async () => {
+    const enumerable = Enumerable.from([1, 2, 3, 4, 5, 6])
+      .select((n: number, i: number) => n * i)
+      .where(n => n >= 6)
+      .select(n => n * 3);
+
+    const result = enumerable.toArray();
+
+    expect(result.length).toEqual(4);
+  });
 });

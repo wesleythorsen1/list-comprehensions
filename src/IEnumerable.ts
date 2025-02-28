@@ -1,6 +1,8 @@
-import { Comparable, Grouping, IsKeyValuePair } from './types';
+import { Comparable, Grouping, IsKeyValuePair, Operation } from './types';
 
 export interface IEnumerable<T> extends Iterable<T> {
+  operations: Operation[];
+
   all(predicate: (element: T) => boolean): boolean;
   any(): boolean;
   any(predicate: (element: T) => boolean): boolean;
