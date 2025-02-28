@@ -6,9 +6,9 @@ set -e
 # build
 docker build \
   -f ./benchmark/Dockerfile \
-  -t list-comprehensions-benchmarks:latest \
+  -t list-comprehensions-benchmarks \
   ./benchmark
 
 echo "Running benchmarks"
 
-docker run --memory=100m --cpus=1 list-comprehensions-benchmarks:latest
+docker run --memory=100m --cpus=1 --rm -v "$(pwd)/benchmark/results:/app/results" list-comprehensions-benchmarks

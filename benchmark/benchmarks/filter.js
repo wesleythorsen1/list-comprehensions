@@ -1,7 +1,6 @@
 const Benchmark = require('benchmark');
 const _ = require('lodash');
 const underscore = require('underscore');
-require('@bussin/list-comprehensions/extensions/Array');
 const { Enumerable } = require('@bussin/list-comprehensions');
 
 const data = Array.from({ length: 100_000 }, (j, i) => i);
@@ -13,9 +12,6 @@ exports.filter = new Benchmark.Suite('filter')
   })
   .add('Enumerable', function () {
     const result = Enumerable.from(data).where(isEven).toArray();
-  })
-  .add('Enumerable (extension)', function () {
-    const result = data.where(isEven).toArray();
   })
   .add('Lodash', function () {
     const result = _.filter(data, isEven);

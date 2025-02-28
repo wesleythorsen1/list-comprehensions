@@ -44,7 +44,7 @@ const blcVersion = package.dependencies['@bussin/list-comprehensions'].replace(/
     .map(o => `${o.suite},${o.name},${o.ops_sec},${o.variance},${o.samples}`)
     .join('\n');
 
-  writeFileSync(`./benchmark/results/${Date.now()}.${blcVersion}.csv`, fileOutput);
+  writeFileSync(`./results/${Date.now()}.${blcVersion}.csv`, fileOutput);
 
   console.log('done');
 })();
