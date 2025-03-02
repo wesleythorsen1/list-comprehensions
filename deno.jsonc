@@ -1,0 +1,21 @@
+{
+  "name": "@bussin/list-comprehensions",
+  "version": "0.2.0",
+  "license": "MIT",
+  "publish": {
+    "exclude": [
+      "test/",
+      "benchmark/"
+    ]
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./extensions/*": "./src/extensions/*.js"
+  },
+  "tasks": {
+    // "release": "./bin/release"
+  },
+  "imports": {
+    "@std/expect": "jsr:@std/expect@^1.0.13"
+  }
+}

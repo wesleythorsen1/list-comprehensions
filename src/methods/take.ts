@@ -1,8 +1,11 @@
-import { Enumerable } from '../Enumerable';
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
+import { Enumerable } from "../Enumerable.ts";
 
-export function take<TSource>(this: IEnumerable<TSource>, count: number): IEnumerable<TSource> {
-  if (count < 0) throw new Error('count must be 0 or larger');
+export function take<TSource>(
+  this: IEnumerable<TSource>,
+  count: number,
+): IEnumerable<TSource> {
+  if (count < 0) throw new Error("count must be 0 or larger");
 
   const source = this;
 

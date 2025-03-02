@@ -1,4 +1,4 @@
-// // import { IEnumerable } from '../IEnumerable';
+// // import type { IEnumerable } from '../IEnumerable.ts';
 
 // // export function aggregate<TSource>(
 // //   this: IEnumerable<TSource>,
@@ -22,7 +22,7 @@
 // //   return resultSelector(seed);
 // // }
 
-// import { IEnumerable } from '../IEnumerable';
+// import type { IEnumerable } from '../IEnumerable.ts';
 
 // export function aggregate<TSource>(
 //   this: IEnumerable<TSource>,

@@ -1,8 +1,8 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 // import { iterateRecord, toLookupIntermediary } from '../internals';
 
 // export function leftJoin<TLeft, TRight, TKey extends keyof any>(
-//   this: Enumerable<TLeft>,
+//   this: IEnumerable<TLeft>,
 //   leftKeySelector: (element: TLeft) => TKey,
 //   right: Enumerable<TRight>,
 //   rightKeySelector: (element: TRight) => TKey,

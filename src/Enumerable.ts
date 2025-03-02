@@ -1,6 +1,6 @@
-import { IEnumerable } from './IEnumerable';
-import * as methods from './methods';
-import { Comparable, Grouping, IsKeyValuePair } from './types';
+import type { IEnumerable } from "./IEnumerable.ts";
+import type { Comparable, IsKeyValuePair } from "./types/index.ts";
+import * as methods from "./methods/index.ts";
 
 export class Enumerable<T> implements IEnumerable<T> {
   protected constructor(protected readonly source: Iterable<T>) {}
@@ -39,31 +39,30 @@ export class Enumerable<T> implements IEnumerable<T> {
   take = methods.take;
   toArray = methods.toArray;
   toLookup = methods.toLookup;
-  toRecord: IsKeyValuePair<T> extends true
-    ? {
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<[TKey, TValue]>,
-        ): Record<TKey, TValue>;
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      }
+  toRecord: IsKeyValuePair<T> extends true ? {
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<[TKey, TValue]>,
+      ): Record<TKey, TValue>;
+      <TKey extends string | number | symbol>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+      ): Record<TKey, T>;
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+        valueSelector: (element: T) => TValue,
+      ): Record<TKey, TValue>;
+    }
     : {
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      } = methods.toRecord as any;
+      <TKey extends string | number | symbol>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+      ): Record<TKey, T>;
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+        valueSelector: (element: T) => TValue,
+      ): Record<TKey, TValue>;
+    } = methods.toRecord as any;
   where = methods.where;
 }

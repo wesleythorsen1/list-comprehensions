@@ -1,4 +1,4 @@
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
 
 export function toRecord<
   TSource extends [TKey, TValue],
@@ -11,25 +11,37 @@ export function toRecord<TSource, TKey extends string | number | symbol>(
   keySelector: (element: TSource) => TKey,
 ): Record<TKey, TSource>;
 
-export function toRecord<TSource, TKey extends string | number | symbol, TValue>(
+export function toRecord<
+  TSource,
+  TKey extends string | number | symbol,
+  TValue,
+>(
   this: IEnumerable<TSource>,
   keySelector: (element: TSource) => TKey,
   valueSelector: (element: TSource) => TValue,
 ): Record<TKey, TValue>;
 
-export function toRecord<TSource, TKey extends string | number | symbol, TValue>(
+export function toRecord<
+  TSource,
+  TKey extends string | number | symbol,
+  TValue,
+>(
   this: IEnumerable<TSource>,
   keySelector?: (element: TSource) => TKey,
   valueSelector?: (element: TSource) => TValue,
-): Record<any, any> {
+): Record<TKey, TValue> {
   if (!keySelector) {
-    // @ts-expect-error
+    // @ts-expect-error TODO: Types are messed up on this
     return Object.fromEntries(this);
   }
 
   if (!valueSelector) {
-    return Object.fromEntries(this.select(e => [keySelector(e), e]));
+    // @ts-expect-error TODO: Types are messed up on this
+    return Object.fromEntries(this.select((e) => [keySelector(e), e]));
   }
 
-  return Object.fromEntries(this.select(e => [keySelector(e), valueSelector(e)]));
+  // @ts-expect-error TODO: Types are messed up on this
+  return Object.fromEntries(
+    this.select((e) => [keySelector(e), valueSelector(e)]),
+  );
 }

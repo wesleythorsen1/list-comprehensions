@@ -1,7 +1,7 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 
 // export function firstOrDefaultBy<T>(
-//   this: Enumerable<T>,
+//   this: IEnumerable<T>,
 //   predicate: (element: T) => boolean,
 //   defaultValue: any = null,
 // ) {

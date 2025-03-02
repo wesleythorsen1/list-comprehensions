@@ -1,8 +1,14 @@
 # @bussin/list-comprehensions
 
-[![NPM Version](https://img.shields.io/npm/v/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions) [![NPM Version](https://img.shields.io/npm/dw/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions) [![NPM Version](https://img.shields.io/bundlephobia/min/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions)
+[![NPM Version](https://img.shields.io/npm/v/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions)
+[![NPM Version](https://img.shields.io/npm/dw/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions)
+[![NPM Version](https://img.shields.io/bundlephobia/min/@bussin/list-comprehensions)](https://npmjs.com/package/@bussin/list-comprehensions)
 
-A strongly typed list comprehension library built with TypeScript. Uses deferred execution for more performant operations. Provides prototype extensions on all `Iterable<T>` NodeJS classes for more fluent use (`Array`, `Map`, `Set`, etc., this is strictly opt-in). Inspired by [LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/linq/).
+A strongly typed list comprehension library built with TypeScript. Uses deferred
+execution for more performant operations. Provides prototype extensions on all
+`Iterable<T>` NodeJS classes for more fluent use (`Array`, `Map`, `Set`, etc.,
+this is strictly opt-in). Inspired by
+[LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/linq/).
 
 License: [MIT](https://opensource.org/licenses/MIT)
 
@@ -14,45 +20,45 @@ License: [MIT](https://opensource.org/licenses/MIT)
 
 ```TypeScript
 // Extend the `Array<T>` prototype (optional)
-import '@bussin/list-comprehensions/extensions/Array';
+import "@bussin/list-comprehensions/extensions/Array";
 
 const numbers = [1, 2, 3, 4, 5];
 
 // The `where` and `select` methods build up a query but don't run until you call `toArray()` (deferred execution).
 const result = numbers
-  .where(n => n > 2)       // Filters numbers greater than 2
-  .select(n => n * n)      // Squares each remaining number
-  .toArray();              // Materializes the result
+  .where((n) => n > 2) // Filters numbers greater than 2
+  .select((n) => n * n) // Squares each remaining number
+  .toArray(); // Materializes the result
 
 console.log(result); // [9, 16, 25]
 
-console.log(results.any(n => n > 100)) // false
-console.log(results.all(n => n > 0)) // true
+console.log(results.any((n) => n > 100)); // false
+console.log(results.all((n) => n > 0)); // true
 ```
 
 Without extending the Array<T> prototype:
 
 ```TypeScript
-import { Enumerable } from '@bussin/list-comprehensions';
+import { Enumerable } from "@bussin/list-comprehensions";
 
 const people = [
-  { name: 'Alice', age: 25 },
-  { name: 'Bob', age: 20 },
-  { name: 'Carol', age: 30 },
-  { name: 'David', age: 15 },
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 20 },
+  { name: "Carol", age: 30 },
+  { name: "David", age: 15 },
 ];
 
 const namesOfAdults = Enumerable
-  .from(people)                      // Converts Array<People> to Enumerable<People>
-  .where(person => person.age >= 18) // Filters people older than 18
-  .select(person => person.name)     // Selects the persons' name
-  .toArray();                        // Materializes the result
+  .from(people) // Converts Array<People> to Enumerable<People>
+  .where((person) => person.age >= 18) // Filters people older than 18
+  .select((person) => person.name) // Selects the persons' name
+  .toArray(); // Materializes the result
 
 console.log(namesOfAdults); // ['Alice', 'Bob', 'Carol']
 
 const youngest = Enumerable
-  .from(people)                 // Converts Array<People> to Enumerable<People>
-  .minBy(person => person.age); // Gets the youngest person
+  .from(people) // Converts Array<People> to Enumerable<People>
+  .minBy((person) => person.age); // Gets the youngest person
 
 console.log(youngest.name); // 'David'
 ```
@@ -134,4 +140,7 @@ console.log(youngest.name); // 'David'
 
 ## Support
 
-Please create a PR if you find any missing functionality that you's like to add. For bugs, please use the [issues tracker](https://github.com/wesleythorsen1/list-comprehensions/issues). I'll be happy to help you!
+Please create a PR if you find any missing functionality that you's like to add.
+For bugs, please use the
+[issues tracker](https://github.com/wesleythorsen1/list-comprehensions/issues).
+I'll be happy to help you!

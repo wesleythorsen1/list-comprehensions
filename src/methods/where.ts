@@ -1,5 +1,5 @@
-import { Enumerable } from '../Enumerable';
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
+import { Enumerable } from "../Enumerable.ts";
 
 export function where<TSource>(
   this: IEnumerable<TSource>,

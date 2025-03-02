@@ -3,20 +3,9 @@
   "configurations": [
     {
       "name": "ts-node",
-      "type": "node",
+      "type": "deno",
       "request": "launch",
-      // "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
-      // "runtimeArgs": [
-      //   "--transpile-only",
-      //   // if you use esm
-      //   "--esm"
-      // ],
-      "program": "${file}",
-      "cwd": "${workspaceRoot}",
-      "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": ["<node_internals>/**", "node_modules/**"],
-      "runtimeExecutable": "node",
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"]
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }

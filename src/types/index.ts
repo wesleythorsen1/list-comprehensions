@@ -1,3 +1,3 @@
-export * from './Comparable';
-export * from './Grouping';
-export * from './IsKeyValuePair';
+export * from "./Comparable.ts";
+export * from "./Grouping.ts";
+export * from "./IsKeyValuePair.ts";

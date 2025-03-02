@@ -1,9 +1,9 @@
-import { IEnumerable } from '../../IEnumerable';
-import { asEnumerable } from '../../methods';
+import type { IEnumerable } from "../../IEnumerable.ts";
+import { asEnumerable } from "../../methods/asEnumerable.ts";
 
 declare global {
   interface Array<T> extends IEnumerable<T> {
-    asEnumerable: IEnumerable<T>['asEnumerable'];
+    asEnumerable: IEnumerable<T>["asEnumerable"];
   }
 }
 

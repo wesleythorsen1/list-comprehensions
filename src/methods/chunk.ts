@@ -1,11 +1,11 @@
-import { Enumerable } from '../Enumerable';
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
+import { Enumerable } from "../Enumerable.ts";
 
 export function chunk<TSource>(
   this: IEnumerable<TSource>,
   size: number,
 ): IEnumerable<IEnumerable<TSource>> {
-  if (size <= 0) throw new Error('batch size must be larger than 0');
+  if (size <= 0) throw new Error("batch size must be larger than 0");
 
   const source = this;
 

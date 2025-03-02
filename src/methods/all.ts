@@ -1,4 +1,4 @@
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
 
 export function all<TSource>(
   this: IEnumerable<TSource>,

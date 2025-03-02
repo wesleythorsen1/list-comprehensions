@@ -1,7 +1,7 @@
 // require('@bussin/list-comprehensions/extensions/Array');
 // const microtime = require('microtime');
-const { Duration } = require('luxon');
-const { Enumerable } = require('@bussin/list-comprehensions');
+const { Duration } = require("luxon");
+const { Enumerable } = require("@bussin/list-comprehensions");
 
 // const data = Array.from({ length: 10_000_000 }, (j, i) => i);
 
@@ -25,13 +25,13 @@ const { Enumerable } = require('@bussin/list-comprehensions');
 const start = Date.now();
 
 const result = Enumerable.range(0, 100_000_000)
-  .where(x => x % 2 === 0)
-  .select(x => x * x)
+  .where((x) => x % 2 === 0)
+  .select((x) => x * x)
   .select((x, i) => x - i * i)
-  .where(x => x % 2 === 0)
+  .where((x) => x % 2 === 0)
   .toArray();
 
-console.log('duration', Duration.fromMillis(Date.now() - start).toISOTime());
+console.log("duration", Duration.fromMillis(Date.now() - start).toISOTime());
 
 // const start = Date.now();
 

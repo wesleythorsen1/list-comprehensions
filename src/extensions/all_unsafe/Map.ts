@@ -1,5 +1,5 @@
-import { Enumerable } from '../../Enumerable';
-import { IEnumerable } from '../../IEnumerable';
+import type { IEnumerable } from "../../IEnumerable.ts";
+import { Enumerable } from "../../Enumerable.ts";
 
 declare global {
   interface Map<K, V> extends IEnumerable<[K, V]> {

@@ -1,9 +1,9 @@
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
 
 export function count<TSource>(this: IEnumerable<TSource>): number;
 export function count<TSource>(
   this: IEnumerable<TSource>,
-  predicate: (element: TSource) => boolean = _ => true,
+  predicate: (element: TSource) => boolean = (_) => true,
 ): number {
   let i = 0;
 

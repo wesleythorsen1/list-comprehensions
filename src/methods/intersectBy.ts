@@ -1,7 +1,7 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 
 // export function intersectBy<T, TKey>(
-//   this: Enumerable<T>,
+//   this: IEnumerable<T>,
 //   enumerable: Enumerable<T>,
 //   selector: (element: T) => TKey,
 // ) {

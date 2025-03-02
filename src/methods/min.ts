@@ -1,6 +1,8 @@
-import { Enumerable } from '../Enumerable';
-import { Comparable } from '../types';
+import type { IEnumerable } from "../IEnumerable.ts";
+import type { Comparable } from "../types/index.ts";
 
-export function min<TSource extends Comparable>(this: Enumerable<TSource>) {
-  return this.minBy(x => x);
+export function min<TSource extends Comparable>(
+  this: IEnumerable<TSource>,
+): TSource | null {
+  return this.minBy((x) => x);
 }

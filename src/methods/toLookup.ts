@@ -1,15 +1,20 @@
-import { Enumerable } from '../Enumerable';
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
+import { Enumerable } from "../Enumerable.ts";
 
 export function toLookup<TSource, TKey extends string | number | symbol>(
-  this: Enumerable<TSource>,
+  this: IEnumerable<TSource>,
   keySelector: (element: TSource) => TKey,
 ): Map<TKey, IEnumerable<TSource>>;
 
-export function toLookup<TSource, TKey extends string | number | symbol, TValue>(
+export function toLookup<
+  TSource,
+  TKey extends string | number | symbol,
+  TValue,
+>(
   this: IEnumerable<TSource>,
   keySelector: (element: TSource) => TKey,
-  valueSelector: (element: TSource) => TValue = (x: any) => x,
+  valueSelector: (element: TSource) => TValue = (x: unknown): TValue =>
+    x as TValue,
 ): Map<TKey, IEnumerable<TValue>> {
   const map = new Map<TKey, TValue[] | IEnumerable<TValue>>();
 

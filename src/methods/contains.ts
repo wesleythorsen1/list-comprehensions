@@ -1,6 +1,9 @@
-import { IEnumerable } from '../IEnumerable';
+import type { IEnumerable } from "../IEnumerable.ts";
 
-export function contains<TSource>(this: IEnumerable<TSource>, value: TSource): boolean;
+export function contains<TSource>(
+  this: IEnumerable<TSource>,
+  value: TSource,
+): boolean;
 export function contains<TSource>(
   this: IEnumerable<TSource>,
   value: TSource,

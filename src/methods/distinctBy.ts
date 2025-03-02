@@ -1,6 +1,6 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 
-// export function distinctBy<T, TKey>(this: Enumerable<T>, selector: (element: T) => TKey) {
+// export function distinctBy<T, TKey>(this: IEnumerable<T>, selector: (element: T) => TKey) {
 //   const inner = this;
 //   const set = new Set<TKey>();
 

@@ -1,5 +1,5 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 
-// export function firstOrDefault<T>(this: Enumerable<T>, defaultValue: any = null) {
+// export function firstOrDefault<T>(this: IEnumerable<T>, defaultValue: any = null) {
 //   return this.firstOrDefaultBy(_ => true, defaultValue);
 // }

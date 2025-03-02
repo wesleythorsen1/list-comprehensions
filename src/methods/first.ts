@@ -1,5 +1,5 @@
-// import { Enumerable } from '../Enumerable';
+// import { Enumerable } from "../Enumerable.ts";
 
-// export function first<T>(this: Enumerable<T>) {
+// export function first<T>(this: IEnumerable<T>) {
 //   return this.firstBy(_ => true);
 // }

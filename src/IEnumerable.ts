@@ -1,4 +1,4 @@
-import { Comparable, Grouping, IsKeyValuePair } from './types';
+import type { Comparable, Grouping, IsKeyValuePair } from "./types/index.ts";
 
 export interface IEnumerable<T> extends Iterable<T> {
   all(predicate: (element: T) => boolean): boolean;
@@ -17,26 +17,36 @@ export interface IEnumerable<T> extends Iterable<T> {
     keySelector: (element: T) => TKey,
     comparer: (x: TKey, y: TKey) => boolean,
   ): IEnumerable<[TKey, number]>;
-  groupBy<TKey, TValue = T>(keySelector: (element: T) => TKey): IEnumerable<Grouping<TKey, TValue>>;
+  groupBy<TKey, TValue = T>(
+    keySelector: (element: T) => TKey,
+  ): IEnumerable<Grouping<TKey, TValue>>;
   groupBy<TKey, TValue>(
     keySelector: (element: T) => TKey,
     valueSelector: (element: T) => TValue,
   ): IEnumerable<Grouping<TKey, TValue>>;
   max: T extends Comparable ? () => T | null : never;
-  maxBy<TValue extends Comparable>(valueSelector: (element: T) => TValue): T | null;
+  maxBy<TValue extends Comparable>(
+    valueSelector: (element: T) => TValue,
+  ): T | null;
   maxBy<TValue>(
     valueSelector: (element: T) => TValue,
     comparer: (x: TValue, y: TValue) => number,
   ): T | null;
   min: T extends Comparable ? () => T | null : never;
-  minBy<TValue extends Comparable>(valueSelector: (element: T) => TValue): T | null;
+  minBy<TValue extends Comparable>(
+    valueSelector: (element: T) => TValue,
+  ): T | null;
   minBy<TValue>(
     valueSelector: (element: T) => TValue,
     comparer: (x: TValue, y: TValue) => number,
   ): T | null;
   select<TResult>(selector: (element: T) => TResult): IEnumerable<TResult>;
-  select<TResult>(selector: (element: T, i: number) => TResult): IEnumerable<TResult>;
-  selectMany<TResult>(selector: (element: T) => IEnumerable<TResult>): IEnumerable<TResult>;
+  select<TResult>(
+    selector: (element: T, i: number) => TResult,
+  ): IEnumerable<TResult>;
+  selectMany<TResult>(
+    selector: (element: T) => IEnumerable<TResult>,
+  ): IEnumerable<TResult>;
   selectMany<TResult>(
     selector: (element: T, i: number) => IEnumerable<TResult>,
   ): IEnumerable<TResult>;
@@ -50,32 +60,31 @@ export interface IEnumerable<T> extends Iterable<T> {
     keySelector: (element: T) => TKey,
     valueSelector: (element: T) => TValue,
   ): Map<TKey, IEnumerable<TValue>>;
-  toRecord: IsKeyValuePair<T> extends true
-    ? {
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<[TKey, TValue]>,
-        ): Record<TKey, TValue>;
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      }
+  toRecord: IsKeyValuePair<T> extends true ? {
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<[TKey, TValue]>,
+      ): Record<TKey, TValue>;
+      <TKey extends string | number | symbol>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+      ): Record<TKey, T>;
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+        valueSelector: (element: T) => TValue,
+      ): Record<TKey, TValue>;
+    }
     : {
-        <TKey extends string | number | symbol>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-        ): Record<TKey, T>;
-        <TKey extends string | number | symbol, TValue>(
-          this: IEnumerable<T>,
-          keySelector: (element: T) => TKey,
-          valueSelector: (element: T) => TValue,
-        ): Record<TKey, TValue>;
-      };
+      <TKey extends string | number | symbol>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+      ): Record<TKey, T>;
+      <TKey extends string | number | symbol, TValue>(
+        this: IEnumerable<T>,
+        keySelector: (element: T) => TKey,
+        valueSelector: (element: T) => TValue,
+      ): Record<TKey, TValue>;
+    };
   where(predicate: (element: T) => boolean): IEnumerable<T>;
   where(predicate: (element: T, i: number) => boolean): IEnumerable<T>;
 }

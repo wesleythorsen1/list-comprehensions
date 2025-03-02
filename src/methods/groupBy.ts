@@ -1,7 +1,7 @@
-import { Grouping } from '../types';
-import { Enumerable } from '../Enumerable';
-import { IEnumerable } from '../IEnumerable';
-import { hash } from '../util';
+import type { IEnumerable } from "../IEnumerable.ts";
+import type { Grouping } from "../types/index.ts";
+import { Enumerable } from "../Enumerable.ts";
+import { hash } from "../util/index.ts";
 
 export function groupBy<TSource, TKey>(
   this: IEnumerable<TSource>,
@@ -11,7 +11,8 @@ export function groupBy<TSource, TKey>(
 export function groupBy<TSource, TKey, TValue>(
   this: IEnumerable<TSource>,
   keySelector: (element: TSource) => TKey,
-  valueSelector: (element: TSource) => TValue = (x: any) => x,
+  valueSelector: (element: TSource) => TValue = (x: unknown): TValue =>
+    x as TValue,
 ): IEnumerable<Grouping<TKey, TValue>> {
   const map = new Map<number, { key: TKey; values: TValue[] }>();
 
