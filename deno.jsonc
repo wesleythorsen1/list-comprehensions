@@ -9,8 +9,11 @@
     ]
   },
   "exports": {
-    ".": "./src/index.js",
-    "./extensions/*": "./src/extensions/*.js"
+    ".": "./mod.ts",
+    "./extensions/asEnumerable": "./src/extensions/asEnumerable/all.ts",
+    "./extensions/asEnumerable/Array": "./src/extensions/asEnumerable/Array.ts",
+    "./extensions/asEnumerable/Map": "./src/extensions/asEnumerable/Map.ts",
+    "./extensions/asEnumerable/Set": "./src/extensions/asEnumerable/Set.ts"
   },
   "tasks": {
     // "release": "./bin/release"

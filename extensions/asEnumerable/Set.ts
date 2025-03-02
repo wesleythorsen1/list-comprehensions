@@ -1,5 +1,5 @@
-import type { IEnumerable } from "../../IEnumerable.ts";
-import { asEnumerable } from "../../methods/asEnumerable.ts";
+import type { IEnumerable } from "../../src/IEnumerable.ts";
+import { asEnumerable } from "../../src/methods/asEnumerable.ts";
 
 declare global {
   interface Set<T> extends IEnumerable<T> {

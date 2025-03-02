@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Enumerable } from "../../../src/index.ts";
+import { Enumerable } from "../../../src/Enumerable.ts";
 
 Deno.test("it should return false for an empty iterable with no predicate", () => {
   // arrange

@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Enumerable } from "../../src/index.ts";
+import { Enumerable } from "../../src/Enumerable.ts";
 
 Deno.test("it repeat -> select -> where -> select -> groupBy -> toArray", () => {
   const enumerable = Enumerable.repeat(1, 12)

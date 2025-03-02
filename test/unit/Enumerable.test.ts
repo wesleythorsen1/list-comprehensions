@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Enumerable } from "../../src/index.ts";
+import { Enumerable } from "../../src/Enumerable.ts";
 
 Deno.test("it can be enumerate array base more than once", () => {
   const enumerable = Enumerable.from([1, 2, 3, 4, 5, 6])

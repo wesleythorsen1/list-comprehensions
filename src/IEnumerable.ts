@@ -1,4 +1,6 @@
-import type { Comparable, Grouping, IsKeyValuePair } from "./types/index.ts";
+import type { Grouping } from "./types/Grouping.ts";
+import type { Comparable } from "./types/Comparable.ts";
+import type { IsKeyValuePair } from "./types/IsKeyValuePair.ts";
 
 export interface IEnumerable<T> extends Iterable<T> {
   all(predicate: (element: T) => boolean): boolean;

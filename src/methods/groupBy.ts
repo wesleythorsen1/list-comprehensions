@@ -1,7 +1,7 @@
 import type { IEnumerable } from "../IEnumerable.ts";
-import type { Grouping } from "../types/index.ts";
+import type { Grouping } from "../types/Grouping.ts";
 import { Enumerable } from "../Enumerable.ts";
-import { hash } from "../util/index.ts";
+import { hash } from "../util/hash.ts";
 
 export function groupBy<TSource, TKey>(
   this: IEnumerable<TSource>,

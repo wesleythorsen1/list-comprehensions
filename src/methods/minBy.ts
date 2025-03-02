@@ -1,5 +1,5 @@
 import type { IEnumerable } from "../IEnumerable.ts";
-import type { Comparable } from "../types/index.ts";
+import type { Comparable } from "../types/Comparable.ts";
 
 const valueNotSet = Symbol("valueNotSet");
 

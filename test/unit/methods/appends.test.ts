@@ -1,5 +1,5 @@
 import { expect } from "@std/expect";
-import { Enumerable } from "../../../src/index.ts";
+import { Enumerable } from "../../../src/Enumerable.ts";
 
 Deno.test("it should return a new enumerable that yields only the appended value when the source is empty", () => {
   // arrange
