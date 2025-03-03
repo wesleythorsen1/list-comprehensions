@@ -1,8 +1,11 @@
 import type { Grouping } from "./types/Grouping.ts";
 import type { Comparable } from "./types/Comparable.ts";
 import type { IsKeyValuePair } from "./types/IsKeyValuePair.ts";
+import type { Operation } from "./types/Operation.ts";
 
 export interface IEnumerable<T> extends Iterable<T> {
+  operations: Operation[];
+
   all(predicate: (element: T) => boolean): boolean;
   any(): boolean;
   any(predicate: (element: T) => boolean): boolean;

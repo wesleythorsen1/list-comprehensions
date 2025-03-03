@@ -1,6 +1,7 @@
 import type { IEnumerable } from "./IEnumerable.ts";
 import type { Comparable } from "./types/Comparable.ts";
 import type { IsKeyValuePair } from "./types/IsKeyValuePair.ts";
+import type { Operation } from "./types/Operation.ts";
 import { all } from "./methods/all.ts";
 import { any } from "./methods/any.ts";
 import { append } from "./methods/append.ts";
@@ -26,12 +27,27 @@ import { toArray } from "./methods/toArray.ts";
 import { toLookup } from "./methods/toLookup.ts";
 import { toRecord } from "./methods/toRecord.ts";
 import { where } from "./methods/where.ts";
+import { compileOperations } from "./code-gen/compileOperations.ts";
 
 export class Enumerable<T> implements IEnumerable<T> {
+  public operations: Operation[] = [];
+
   protected constructor(protected readonly source: Iterable<T>) {}
 
   [Symbol.iterator](): Iterator<T> {
-    return this.source[Symbol.iterator]();
+    const sourceArr = Array.from(this.source);
+
+    if (this.operations.length === 0) {
+      return sourceArr[Symbol.iterator]();
+    }
+
+    const fusedFn = compileOperations(this.operations);
+
+    this.operations = [];
+
+    const resultArr = fusedFn(sourceArr);
+
+    return resultArr[Symbol.iterator]();
   }
 
   // static
